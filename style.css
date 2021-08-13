@@ -11,6 +11,9 @@ img {
   width: 100%;
   height: auto;
 }
+ul {
+  list-style: none;
+}
 
 /* --- VARIABLES --- */
 :root {
@@ -35,7 +38,7 @@ body {
   background-color: var(--body-color);
   -webkit-font-smoothing: antialiased; /*Funciona em mac, deixa a font mais clarinha, bacana*/
 }
-h1 {
+.title {
   font: 700 1.875rem 'Poppins', sans-serif; /*30px*/
   color: var(--title-color);
   -webkit-font-smoothing: auto; /*Aqui vou deixa o broser se virar*/
@@ -88,6 +91,20 @@ section {
   z-index: 100;
   background-color: var(--body-color);
 }
+main {
+  margin-top: calc(var(--header-height) + 1.5rem);
+}
+
+/* --- LOGO --- */
+.logo {
+  font: 700 1.31rem 'Poppins', sans-serif; /*21px*/
+  color: var(--title-color);
+}
+.logo span {
+  color: var(--base-color);
+}
+
+/* --- NAVIGATION --- */
 nav {
   height: var(--header-height); /*height no Figma = 72px, font-size root = 16px, ou seja, 72/16 = 4.5 */
   width: 100%;
@@ -96,15 +113,31 @@ nav {
   justify-content: space-between;
   align-items: center;
 }
-.logo {
-  font: 700 1.31rem 'Poppins', sans-serif; /*21px*/
-  color: var(--title-color);
+nav ul li {
+  text-align: center;
 }
-.logo span {
-  color: var(--base-color);
+nav #menu {
+  opacity: 0;
+  visibility: hidden;
 }
-main {
-  margin-top: var(--header-height);
+/* Mostrar menu */
+nav.show #menu {
+  opacity: 1;
+  visibility: visible;
+
+  background-color: var(--body-color);
+  
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  display: grid;
+  place-content: center;
+}
+nav.show ul.grid {
+  gap: 4rem; /*64px*/
 }
 
 /* --- HOME --- */
@@ -124,9 +157,11 @@ main {
   background-color: var(--base-color-second);
   position: absolute;
   /*
-    Calculos que fiz pra achar ali:
+    Calculos que fiz, regrinha de 3
     top: height-> 242px -> 100% / diferença entre eles no figma é de 40px -> %?
     left: width -> 348px -> 100% / diferença entre eles no figma é de 39px -> %?
+    
+    dps passei pra rem
   */
   top: -2.5rem;
   left: 2.43rem;
