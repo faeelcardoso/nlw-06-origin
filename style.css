@@ -12,23 +12,141 @@ img {
   height: auto;
 }
 
+/* --- VARIABLES --- */
+:root {
+  --header-height: 4.5rem;
+
+  /*Colors*/
+  --hue: 159; /* light-blue, coloquei aq porq vai usar o mesmo várias vezes */
+
+  --base-color: hsl(var(--hue) 36% 57%);
+  --base-color-second: hsl(var(--hue) 65% 88%);
+  --base-color-alt: hsl(var(--hue) 57% 53%);
+  --title-color: hsl(var(--hue) 41% 10%);
+  --text-color: hsl(0 0% 46%);
+  --text-color-light: hsl(0 0% 98%);
+  --body-color: hsl(0 0% 98%);
+}
+
 /* --- BASE --- */
 body {
   font: 400 1rem 'DM Sans', sans-serif;
+  color: var(--text-color);
+  background-color: var(--body-color);
+  -webkit-font-smoothing: antialiased; /*Funciona em mac, deixa a font mais clarinha, bacana*/
 }
 h1 {
   font: 700 1.875rem 'Poppins', sans-serif; /*30px*/
+  color: var(--title-color);
+  -webkit-font-smoothing: auto; /*Aqui vou deixa o broser se virar*/
+}
+.button {
+  background-color: var(--base-color);
+  color: var(--text-color-light);
+  height: 3.5rem; /*56px*/
+  display: inline-flex;
+  align-items: center;
+  padding: 0 2rem;
+  border-radius: .25rem; 
+  font: 500 1rem 'DM Sans', sans-serif;
+  transition: background-color .3s;
+}
+.button:hover {
+  cursor: pointer;
+  background-color: var(--base-color-alt);
+}
+.divider-1 {
+  height: 1px;
+  /* Linear-gradient, sinistro demais */
+  background: linear-gradient(
+    270deg,
+    hsla(var(--hue), 36%, 57%, 1) 0%,
+    hsla(var(--hue), 65%, 88%, .34) 100%
+  );
 }
 
 /* --- LAYOUT --- */
-#mainHeader {
-  height: 4.5rem; /*height no Figma = 72px, font-size root = 16px, ou seja, 72/16 = 4.5 */
-}
-nav {
-  display: flex;
-  justify-content: space-between;
+section {
+  padding: 5rem 0; /*80px*/
 }
 .container {
-  width: 100%;
   margin: 0 1.5rem; /* 24px dos lados */
+}
+.grid {
+  display: grid;
+  gap: 2rem; /*32px*/
+}
+#mainHeader {
+  border-bottom: 1px solid #e4e4e4;
+  margin-bottom: 2rem;
+  width: 100%;
+  display: flex; /*para respeitar a caixa flexível da nav*/
+  
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: var(--body-color);
+}
+nav {
+  height: var(--header-height); /*height no Figma = 72px, font-size root = 16px, ou seja, 72/16 = 4.5 */
+  width: 100%;
+  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  font: 700 1.31rem 'Poppins', sans-serif; /*21px*/
+  color: var(--title-color);
+}
+.logo span {
+  color: var(--base-color);
+}
+main {
+  margin-top: var(--header-height);
+}
+
+/* --- HOME --- */
+#home {
+  overflow: hidden;
+}
+#home .container {
+  margin: 0;
+}
+#home .image {
+  position: relative;
+}
+#home .image::before {
+  content: "";
+  height: 100%;
+  width: 100%;
+  background-color: var(--base-color-second);
+  position: absolute;
+  /*
+    Calculos que fiz pra achar ali:
+    top: height-> 242px -> 100% / diferença entre eles no figma é de 40px -> %?
+    left: width -> 348px -> 100% / diferença entre eles no figma é de 39px -> %?
+  */
+  top: -2.5rem;
+  left: 2.43rem;
+  z-index: 0;
+}
+#home .image img,
+#home .image::before {
+  border-radius: .25rem;
+}
+#home .image img {
+  position: relative;
+  right: 2.93rem; /*47*/
+}
+#home .text {
+  margin: 0 1.5rem;
+  text-align: center;
+}
+#home .text h1 {
+  margin-bottom: 1rem; /*16px*/
+}
+#home .text p {
+  margin-bottom: 2rem; /*32px*/
 }
