@@ -1,0 +1,3 @@
+Estou usando o icomoon, um package de ícones
+com ele fica mais fácil usar ícones pois consigo pegar pelo css e html puro
+Obs: olhar arq style.css, lá tem todos os ícones e classes que usei
