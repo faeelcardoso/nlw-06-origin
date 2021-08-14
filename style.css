@@ -32,6 +32,10 @@ ul {
 }
 
 /* --- BASE --- */
+html {
+  /*Velho hack da vida, fazia essa rolagem pelo JS hahahaha*/
+  scroll-behavior: smooth;
+}
 body {
   font: 400 1rem 'DM Sans', sans-serif;
   color: var(--text-color);
@@ -42,6 +46,7 @@ body {
   font: 700 1.875rem 'Poppins', sans-serif; /*30px*/
   color: var(--title-color);
   -webkit-font-smoothing: auto; /*Aqui vou deixa o broser se virar*/
+  margin-bottom: 1rem;
 }
 .button {
   background-color: var(--base-color);
@@ -63,14 +68,30 @@ body {
   /* Linear-gradient, sinistro demais */
   background: linear-gradient(
     270deg,
-    hsla(var(--hue), 36%, 57%, 1) 0%,
-    hsla(var(--hue), 65%, 88%, .34) 100%
+    hsla(var(--hue), 36%, 57%, 1),
+    hsla(var(--hue), 65%, 88%, .34) 
+  );
+}
+.divider-2 {
+  height: 1px;
+  /* Linear-gradient, sinistro demais */
+  background: linear-gradient(
+    270deg,
+    hsla(var(--hue), 65%, 88%, .34), 
+    hsla(var(--hue), 36%, 57%, 1)
   );
 }
 
 /* --- LAYOUT --- */
 section {
   padding: 5rem 0; /*80px*/
+}
+section header {
+  margin-bottom: 4rem;
+}
+section header p span {
+  color: var(--base-color);
+  font-weight: bold;
 }
 .container {
   margin: 0 1.5rem; /* 24px dos lados */
@@ -91,6 +112,9 @@ section {
   z-index: 100;
   background-color: var(--body-color);
 }
+#mainHeader.scroll { /*sombrinha quando rolar a página*/
+  box-shadow: 0 0 12px rgba(0, 0, 0, .2);
+}
 main {
   margin-top: calc(var(--header-height) + 1.5rem);
 }
@@ -110,15 +134,43 @@ nav {
   width: 100%;
   
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 }
 nav ul li {
   text-align: center;
 }
+nav ul li a {
+  position: relative;
+  transition: color .3s;
+}
+nav ul li a:hover {
+  color: var(--base-color);
+}
+nav ul li a::after {
+  content: "";
+  width: 0%;
+  height: 2px;
+  background-color: var(--base-color);
+
+  position: absolute;
+  bottom: -.5rem;
+  left: 0;
+
+  transition: width .3s;
+}
+nav ul li a:hover::after {
+  width: 100%;
+}
 nav #menu {
   opacity: 0;
   visibility: hidden;
+
+  top: -20rem;
+  transition: .3s;
+}
+nav #menu ul {
+  display: none;
 }
 /* Mostrar menu */
 nav.show #menu {
@@ -136,8 +188,34 @@ nav.show #menu {
   display: grid;
   place-content: center;
 }
+nav.show #menu ul {
+  display: grid;
+}
 nav.show ul.grid {
   gap: 4rem; /*64px*/
+}
+
+/* --- TOGGLE MENU --- */
+.toggle {
+  color: var(--base-color);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+nav div.icon-close {
+  visibility: hidden;
+  opacity: 0;
+
+  position: absolute;
+  top: -1.5rem;
+  right: 1.5rem;
+
+  transition: .3s;
+}
+nav.show div.icon-close {
+  visibility: visible;
+  opacity: 1;
+
+  top: 1.5rem;
 }
 
 /* --- HOME --- */
@@ -173,7 +251,7 @@ nav.show ul.grid {
 }
 #home .image img {
   position: relative;
-  right: 2.93rem; /*47*/
+  right: 2.93rem; /*47px*/
 }
 #home .text {
   margin: 0 1.5rem;
@@ -184,4 +262,64 @@ nav.show ul.grid {
 }
 #home .text p {
   margin-bottom: 2rem; /*32px*/
+}
+
+/* --- ABOUT --- */
+#about {
+  background-color: white;
+}
+#about .container {
+  margin: 0;
+}
+#about .image {
+  position: relative;
+}
+#about .image::before {
+  content: "";
+  height: 100%;
+  width: 100%;
+  background-color: var(--base-color-second);
+  position: absolute;
+  /*
+    Calculos que fiz, regrinha de 3
+    top: height-> 242px -> 100% / diferença entre eles no figma é de 40px -> %?
+    left: width -> 348px -> 100% / diferença entre eles no figma é de 39px -> %?
+    
+    Aqui vou deixar na porcentagem, parece que ficou melhor
+  */
+  top: -8%;
+  left: -31%;
+  z-index: 0;
+}
+#about .image img,
+#about .image::before {
+  border-radius: .25rem;
+}
+#about .image img {
+  position: relative;
+}
+#about .text {
+  margin: 0 1.5rem;
+}
+
+/* --- SERVICES --- */
+.cards.grid {
+  gap: 1.5rem;
+}
+.card {
+  padding: 3.6rem 2rem;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, .10); 
+  border-bottom: .25rem solid var(--base-color);
+  border-radius: .25rem .25rem 0 0;
+  text-align: center;
+}
+.card i {
+  display: block;
+  margin-bottom: 1.5rem;
+  font-size: 5rem;
+  color: var(--base-color);
+}
+.card .title {
+  font-size: 1.5rem;
+  margin-bottom: .75rem;
 }
