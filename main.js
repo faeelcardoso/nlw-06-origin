@@ -24,23 +24,20 @@ function removeMenu() {
 
 const Libs = {
   // Testimonials carousel slider -> swiper lib
-  swiper: new Swiper('.swiper-container', {
+  swiper: new Swiper('.swiper', {
       // todas as propriedades estão na API do swiper
       slidesPerView: 1,
       pagination: {
-        el: '.swiper-pagination',
+        el: '.swiper-pagination'
       },
-      mousewheel: true, // rodinha do mouse
+      mousewheel: true,
       keyboard: true,
       breakpoints: {
-        767: { // Tablet pra cima
+        767: {
           slidesPerView: 2,
-          setWrapperSize: true,
         },
         1200: {
-          slidesPerView: 3, 
-          setWrapperSize: true,
-          mousewheel: false,
+          slidesPerView: 3,
         }
       }
   }),
