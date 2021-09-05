@@ -1,14 +1,17 @@
 const MENU = "show";
 const SHADOW_HEADER = "scroll";
 const CONTRAST = "contrast";
+const MENU_ACTIVE = "active";
 
 // DOM ELEMENTS
 const header = document.querySelector("#mainHeader");
 const nav = document.querySelector("#mainHeader nav");
 const main = document.querySelector("main");
+const contact = document.querySelector("#contact");
 const footer = document.querySelector("footer");
 const backToTopButton = document.querySelector(".back-to-top");
 const links = document.querySelectorAll("#menu ul li a");
+const sections = document.querySelectorAll("main section[id]");
 
 function toggleMenu() {
   nav.classList.toggle(MENU);
@@ -23,12 +26,23 @@ const Libs = {
   // Testimonials carousel slider -> swiper lib
   swiper: new Swiper('.swiper-container', {
       // todas as propriedades estão na API do swiper
-      slidePerView: 1,
+      slidesPerView: 1,
       pagination: {
         el: '.swiper-pagination',
       },
       mousewheel: true, // rodinha do mouse
       keyboard: true,
+      breakpoints: {
+        767: { // Tablet pra cima
+          slidesPerView: 2,
+          setWrapperSize: true,
+        },
+        1200: {
+          slidesPerView: 3, 
+          setWrapperSize: true,
+          mousewheel: false,
+        }
+      }
   }),
 
   //ScrollReveal, mostrar os elementos quando der scroll ná página
@@ -78,8 +92,9 @@ function backToTop() {
 function changeContrastBackToTopButton() {
   // Mudo a cor do button quando o user chegar no footer
   const scrollMain = main.scrollHeight;
+  const scrollContact = contact.scrollHeight;
   const scrollFooter = footer.scrollHeight;
-  const scrollArrivedInFooter = scrollMain - scrollFooter;
+  const scrollArrivedInFooter = scrollMain - (scrollFooter + scrollContact);
 
  // Workaround mas ficou massa hahahaha
   if(window.scrollY >= scrollArrivedInFooter) {
@@ -89,12 +104,33 @@ function changeContrastBackToTopButton() {
   }
 }
 
+function activateMenuOnSection() {
+  // checkpoint = decolamento Y da janela + metade da altura da janela
+  const checkpoint = window.pageYOffset + (window.innerHeight / 8) * 2;
+
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.offsetHeight;
+    const sectionId = section.getAttribute("id");
+
+    const checkpointStart = checkpoint >= sectionTop;
+    const checkpointEnd = checkpoint <= sectionTop + sectionHeight;
+
+    if(checkpointStart && checkpointEnd) {
+      document.querySelector("nav ul li a[href*="+sectionId+"]").classList.add(MENU_ACTIVE);
+    } else {
+      document.querySelector("nav ul li a[href*="+sectionId+"]").classList.remove(MENU_ACTIVE);
+    }
+  });
+}
+
 /* WHEN SCROLL */
 function scrollEffects() {
   window.addEventListener("scroll", () => {
     changeHeader();
     backToTop();
     changeContrastBackToTopButton();
+    activateMenuOnSection();
   });
 }
 
