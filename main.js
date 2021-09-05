@@ -38,6 +38,7 @@ const Libs = {
         },
         1200: {
           slidesPerView: 3,
+          mousewheel: false
         }
       }
   }),
